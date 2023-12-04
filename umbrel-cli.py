@@ -63,6 +63,8 @@ def show_usage():
           backup                Creates baackup for Lighting wallet
           app                   Manage Umbrel apps
           repo                  Manage Umbrel repos
+          --help                Prompt this screen again
+          --version             Show version
 
         Umbrel-OS compatible:
           change-password       Change Umbrel password
@@ -100,9 +102,14 @@ if __name__ == "__main__":
         change_password()
     elif command == "details":
         umbrel_details()
-    else:
+    elif command == "--version":
+        print(f"Umbrel-cli v{version}")
+    elif command is None or "--help":
         show_usage()
         sys.exit(1)
+    else:
+        print(f"Unknown command: umbrel {command}")
+        show_usage()
 
     sys.exit(0)
 
