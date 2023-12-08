@@ -6,9 +6,9 @@ if [ ! -d "$umbrel_dir" ]; then
   read -p "Please enter the path to your umbrel directory: " umbrel_dir
 fi
 
-cp umbrel-cli.py "$umbrel_dir/bin"
-chmod +x "$umbrel_dir/bin/umbrel-cli.py"
+cp umbrel-cli.py "$umbrel_dir/scripts"
+chmod +x "$umbrel_dir/scripts/umbrel-cli.py"
 
-ln -s "$umbrel_dir/bin/umbrel-cli.py" /usr/local/bin/umbrel
+ln -s "$umbrel_dir/scripts/umbrel-cli.py" /usr/local/bin/umbrel
 
 umbrel --version
