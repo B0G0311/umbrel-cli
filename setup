@@ -6,15 +6,32 @@ if [ ! -d "$UMBREL_DIR" ]; then
   read -p "Please enter the path to your umbrel directory: " UMBREL_DIR
 fi
 
-sudo cp umbrel-cli.py "$UMBREL_DIR/scripts"
-sudo chmod +x "$UMBREL_DIR/scripts/umbrel-cli.py"
+sudo cp umbrel-cli.py "$UMBREL_DIR/bin"
+sudo chmod +x "$UMBREL_DIR/bin/umbrel-cli.py"
 
 if [ -f "/usr/local/bin/umbrel" ]; then
   sudo rm /usr/local/bin/umbrel
 fi
 
-sudo ln -s "$UMBREL_DIR/scripts/umbrel-cli.py" /usr/local/bin/umbrel
-
+sudo ln -s "$UMBREL_DIR/bin/umbrel-cli.py" /usr/local/bin/umbrel
 umbrel --version
 
-export UMBREL_DIR=${UMBREL_DIR:-$HOME/umbrel}
+# save the UMBREL_DIR variable to ensure persistance
+if [ ! -f "$UMBREL_DIR/bin/.env" ]; then
+  sudo touch "$UMBREL_DIR/bin/.env"
+fi
+
+# Check if UMBREL_DIR already exists in .env file
+ENV_PATH="$UMBREL_DIR/bin/.env"
+
+if grep -q 'UMBREL_DIR' "$ENV_PATH"; then
+    # If it exists, we update the variable
+    sudo sed -i 's|^UMBREL_DIR=.*|UMBREL_DIR='"$UMBREL_DIR"'|' "$ENV_PATH"
+else
+    # If it does not exist, we append it to .env file
+    echo 'UMBREL_DIR='"$UMBREL_DIR" | sudo tee -a "$ENV_PATH" > /dev/null
+fi
+
+# To check the result
+echo "The content of .env file:"
+cat "$ENV_PATH"

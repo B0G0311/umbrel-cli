@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
+from dotenv import load_dotenv
 import os
 import sys
 import subprocess
 
-version = "0.2.2"
+current_dir = os.path.dirname(os.path.realpath(__file__))
+load_dotenv(os.path.join(current_dir, '.env'))
+
+version = "0.2.4"
 umbrel_path = os.environ.get('UMBREL_DIR')
 
 #umbrel
