@@ -1,14 +1,20 @@
 #!/usr/bin/env bash
 
-umbrel_dir="$HOME/umbrel"
+UMBREL_DIR="$HOME/umbrel"
 
-if [ ! -d "$umbrel_dir" ]; then
-  read -p "Please enter the path to your umbrel directory: " umbrel_dir
+if [ ! -d "$UMBREL_DIR" ]; then
+  read -p "Please enter the path to your umbrel directory: " UMBREL_DIR
 fi
 
-cp umbrel-cli.py "$umbrel_dir/scripts"
-chmod +x "$umbrel_dir/scripts/umbrel-cli.py"
+cp umbrel-cli.py "$UMBREL_DIR/scripts"
+chmod +x "$UMBREL_DIR/scripts/umbrel-cli.py"
 
-ln -s "$umbrel_dir/scripts/umbrel-cli.py" /usr/local/bin/umbrel
+if [-f "/usr/local/bin/umbrel" ]; then
+  rm /usr/local/bin/umbrel
+fi
+
+ln -s "$UMBREL_DIR/scripts/umbrel-cli.py" /usr/local/bin/umbrel
 
 umbrel --version
+
+export UMBREL_DIR

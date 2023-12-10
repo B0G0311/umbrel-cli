@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
+import os
 import sys
 import subprocess
 
-version = "0.1"
+version = "0.2"
 #umbrel
 def install_umbrel():
     subprocess.run(["./install"])
@@ -23,7 +24,8 @@ def backup_umbrel():
     subprocess.run(["./backup/backup"])
 
 def app_command(action=None, app_name=None):
-    command = ["./app"]
+    umbrel_path = os.environ.get('UMBREL_DIR')
+    command = [os.path.join(umbrel_path, "app")]
     if action:
         command.append(action)
     if app_name:
@@ -31,8 +33,9 @@ def app_command(action=None, app_name=None):
 
     subprocess.run(command)
 
-def repo_command(action=None, repo=None):
-    command = ["./repo"]
+def repo_command(action=None, repo_name=None):
+    umbrel_path = os.environ.get('UMBREL_DIR')
+    command = [os.path.join(umbrel_path, "repo")]
     if action:
         command.append(action)
     if repo_name:
