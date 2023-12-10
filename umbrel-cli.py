@@ -25,6 +25,7 @@ def backup_umbrel():
 
 def app_command(action=None, app_name=None):
     umbrel_path = os.environ.get('UMBREL_DIR')
+    print(f"umbrel path: {umbrel_path}")
     command = [os.path.join(umbrel_path, "app")]
     if action:
         command.append(action)
