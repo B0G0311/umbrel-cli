@@ -3,30 +3,32 @@ import os
 import sys
 import subprocess
 
-version = "0.2.1"
+version = "0.2.2"
+umbrel_path = os.environ.get('UMBREL_DIR')
+
 #umbrel
 def install_umbrel():
-    subprocess.run(["./install"])
+    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/install")])
 
 def configure_umbrel():
-    subprocess.run(["./configure"])
+    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/configure")])
 
 def start_umbrel():
-    subprocess.run(["./start"])
+    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/start")])
 
 def stop_umbrel():
-    subprocess.run(["./stop"])
+    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/stop")])
 
 def debug_umbrel():
-    subprocess.run(["../debug"])
+    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/debug")])
 
 def backup_umbrel():
-    subprocess.run(["./backup/backup"])
+    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/backup/backup")])
 
 def app_command(action=None, app_name=None):
-    umbrel_path = os.environ.get('UMBREL_DIR')
+    
     print(f"umbrel path: {umbrel_path}")
-    command = [os.path.join(umbrel_path, "scripts/app")]
+    command = ["sudo", os.path.join(umbrel_path, "scripts/app")]
     if action:
         command.append(action)
     if app_name:
@@ -36,7 +38,7 @@ def app_command(action=None, app_name=None):
 
 def repo_command(action=None, repo_name=None):
     umbrel_path = os.environ.get('UMBREL_DIR')
-    command = [os.path.join(umbrel_path, "scripts/repo")]
+    command = ["sudo", os.path.join(umbrel_path, "scripts/repo")]
     if action:
         command.append(action)
     if repo_name:
@@ -46,10 +48,10 @@ def repo_command(action=None, repo_name=None):
 
 #umbrel-os
 def change_password():
-    subprocess.run("./umbrel-os/change-password")
+    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/umbrel-os/change-password")])
 
 def umbrel_details():
-    subprocess.run("./umbrel-os/umbrel-details")
+    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/umbrel-os/umbrel-details")])
 
 #print cli command options
 def show_usage():
