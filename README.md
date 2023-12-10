@@ -9,7 +9,7 @@ This repository is designed to provide a quick setup to allow you to quickly man
 ```bash
 git clone https://github.com/B0G0311/umbrel-cli.git
 cd umbrel-cli
-./setup.sh
+. setup
 ```
 
 ## Usage
