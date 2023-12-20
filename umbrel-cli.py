@@ -7,7 +7,7 @@ import subprocess
 current_dir = os.path.dirname(os.path.realpath(__file__))
 load_dotenv(os.path.join(current_dir, '.env'))
 
-version = "0.2.4"
+version = "0.3"
 umbrel_path = os.environ.get('UMBREL_DIR')
 
 #umbrel
@@ -23,11 +23,26 @@ def start_umbrel():
 def stop_umbrel():
     subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/stop")])
 
-def debug_umbrel():
-    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/debug")])
+def restart_umbrel():
+    if stop_umbrel():
+        print("Umbrel stopped successfully!")
+    else:
+        print("There was an error stopping Umbrel!")
+
+    print("Attempting to start Umbrel...")
+    if start_umbrel():
+        print("---Success---")
+    else:
+        print("There was an error starting Umbrel!")
 
 def backup_umbrel():
     subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/backup/backup")])
+
+def update_umbrel():
+    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/update/update")])
+
+def debug_umbrel():
+    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/debug")])
 
 def app_command(action=None, app_name=None):
     
@@ -69,8 +84,10 @@ def show_usage():
           configure             Updates the Umbrel configuration
           start                 Starts your Umbrel
           stop                  Stops your Umbrel
+          restart               Restarts your Umbrel
+          backup                Creates backup for Lighting wallet
+          update                Update Umbrel to latest release
           debug                 Creates debug output for Umbrel
-          backup                Creates baackup for Lighting wallet
           app                   Manage Umbrel apps
           repo                  Manage Umbrel repos
           --help                Prompt this screen again
@@ -96,10 +113,14 @@ if __name__ == "__main__":
         start_umbrel()
     elif command == "stop":
         stop_umbrel()
-    elif command == "debug":
-        debug_umbrel()
+    elif command == "restart":
+        restart_umbrel()
     elif command == "backup":
         backup_umbrel()
+    elif command == "update":
+        update_umbrel()
+    elif command == "debug":
+        debug_umbrel()
     elif command == "app":
         app_action = sys.argv[2] if len(sys.argv) >= 3 else None
         app_name = sys.argv[3] if len(sys.argv) == 4 else None
@@ -114,12 +135,15 @@ if __name__ == "__main__":
         umbrel_details()
     elif command == "--version":
         print(f"Umbrel-cli v{version}")
+    elif command is not None or "--help":
+        print(f"Unknown command: umbrel {command} /n")
+        sys.exit(1)
     elif command is None or "--help":
         show_usage()
         sys.exit(1)
     else:
-        print(f"Unknown command: umbrel {command}")
-        show_usage()
+        print(f"Unknown command: umbrel {command} /n")
+        sys.exit(1)
 
     sys.exit(0)
 
