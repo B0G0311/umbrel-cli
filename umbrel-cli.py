@@ -66,6 +66,9 @@ def repo_command(action=None, repo_name=None):
     subprocess.run(command)
 
 #umbrel-os
+def mount_storage():
+    subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/umbrel-os/external-storage/mount")])
+
 def change_password():
     subprocess.run(["sudo", os.path.join(umbrel_path, "scripts/umbrel-os/change-password")])
 
@@ -94,6 +97,7 @@ def show_usage():
           --version             Show version
 
         Umbrel-OS compatible:
+          mount                 Mounts external storage to Umbrel
           change-password       Change Umbrel password
           details               Prints the details of your Umbrel
     ''')
@@ -129,6 +133,8 @@ if __name__ == "__main__":
         repo_action = sys.argv[2] if len(sys.argv) >= 3 else None
         repo_name = sys.argv[3] if len(sys.argv) == 4 else None
         repo_command(repo_action, repo_name)
+    elif command == "mount":
+        mount_storage()
     elif command == "change-password":
         change_password()
     elif command == "details":
