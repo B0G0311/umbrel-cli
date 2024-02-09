@@ -5,11 +5,12 @@ umbrel-cli is a a command line tool for managing Umbrel.
 This repository is designed to provide a quick setup to allow you to quickly manage your Umbrel through the command line. 
 
 ## Installation
+at this point umbrel has to be installed before the installation of umbrel-cli.
 
 ```bash
 git clone https://github.com/B0G0311/umbrel-cli.git
 cd umbrel-cli
-. setup
+./setup
 ```
 
 ## Usage
