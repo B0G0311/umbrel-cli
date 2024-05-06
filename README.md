@@ -1,3 +1,5 @@
+### DEPRECATED: Umbrel-CLI will only work on Umbrel prior to the 1.0 upgrade. Do not use if already updated to 1.0
+
 # Umbrel-CLI
 
 umbrel-cli is a a command line tool for managing Umbrel.
